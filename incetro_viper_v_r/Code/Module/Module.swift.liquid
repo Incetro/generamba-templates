@@ -1,0 +1,15 @@
+{% include 'header' %}
+
+import UIKit
+import TransitionHandler
+
+// MARK: - {{ prefix }}{{ module_info.name }}Module
+
+final class {{ prefix }}{{ module_info.name }}Module {
+
+    // MARK: - Module
+
+    static func instantiate(withTransitionHandler transitionHandler: TransitionHandler) -> {{ prefix }}{{ module_info.name }}View {
+        {{ prefix }}{{ module_info.name }}ModuleAssembly().obtainView(withTransitionHandler: transitionHandler)
+    }
+}
