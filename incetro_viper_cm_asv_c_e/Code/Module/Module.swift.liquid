@@ -1,0 +1,23 @@
+{% include 'header' %}
+
+import UIKit
+import TransitionHandler
+
+// MARK: - {{ prefix }}{{ module_info.name }}Module
+
+final class {{ prefix }}{{ module_info.name }}Module: AdvancedModule {
+
+    // MARK: - Aliases
+
+    typealias Input = {{ prefix }}{{ module_info.name }}ModuleInput
+    typealias View = {{ prefix }}{{ module_info.name }}ViewController
+
+    enum Data {
+    }
+
+    // MARK: - Module
+
+    static func instantiate(withData data: Data) -> {{ prefix }}{{ module_info.name }}ViewController {
+		{{ prefix }}{{ module_info.name }}ModuleAssembly().obtainViewController(withData: data)
+    }
+}
