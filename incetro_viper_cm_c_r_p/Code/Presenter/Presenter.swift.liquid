@@ -4,89 +4,109 @@ import TransitionHandler
 
 // MARK: - {{ prefix }}{{ module_info.name }}Presenter
 
-final class {{ prefix }}{{ module_info.name }}Presenter {
-    
+final {{ privacy }}class {{ prefix }}{{ module_info.name }}Presenter {
+
     // MARK: - Properties
-    
+
     /// ModuleOutput instance
     weak var output: {{ prefix }}{{ module_info.name }}ModuleOutput?
 
     /// View instance
-    weak var view: {{ prefix }}{{ module_info.name }}ViewInput?
+    private unowned let view: {{ prefix }}{{ module_info.name }}ViewInput
+
+    /// Interactor instance
+    private let interactor: {{ prefix }}{{ module_info.name }}InteractorInput
+
+    /// Router instance
+    private let router: {{ prefix }}{{ module_info.name }}RouterInput
+
+    /// {{ prefix }}{{ module_info.name }} content manager
+    private let contentManager: {{ prefix }}{{ module_info.name }}ContentManager
 
     /// {{ prefix }}{{ module_info.name }}CellViewModelProtocol factory
     private let viewModelDesigner: {{ custom_parameters.cell }}CellViewModelDesigner
-    
+
     /// Current displaying routes
     private var {{ entities_uncap }}: [{{ custom_parameters.plain }}PlainObject] = []
 
-    /// Interactor instance
-    var interactor: {{ prefix }}{{ module_info.name }}InteractorInput?
-
-    /// Router instance
-    var router: {{ prefix }}{{ module_info.name }}RouterInput?
-    
     // MARK: - Initializers
 
     /// Default initializer
-    ///
-    /// - Parameter viewModelDesigner: {{ custom_parameters.cell }}CellViewModelProtocol factory
-    init(viewModelDesigner: {{ custom_parameters.cell }}CellViewModelDesigner) {
+    /// - Parameters:
+    ///   - view: {{ prefix }}{{ module_info.name }}ViewInput instance
+    ///   - interactor: {{ prefix }}{{ module_info.name }}InteractorInput instance
+    ///   - router: {{ prefix }}{{ module_info.name }}RouterInput instance
+    ///   - contentManager: {{ prefix }}{{ module_info.name }}ContentManager instance
+    ///   - viewModelDesigner: {{ custom_parameters.cell }}CellViewModelProtocol factory
+    {{ privacy }}init(
+        view: {{ prefix }}{{ module_info.name }}ViewInput,
+        interactor: {{ prefix }}{{ module_info.name }}InteractorInput,
+        router: {{ prefix }}{{ module_info.name }}RouterInput,
+        contentManager: {{ prefix }}{{ module_info.name }}ContentManager,
+        viewModelDesigner: {{ custom_parameters.cell }}CellViewModelDesigner
+    ) {
+        self.view = view
+        self.router = router
+        self.interactor = interactor
+        self.contentManager = contentManager
         self.viewModelDesigner = viewModelDesigner
     }
 
-    // MARK - Private
+    // MARK: - Private
 
     private func add({{ entities_uncap }}: [{{ custom_parameters.plain }}PlainObject]) {
         self.{{ entities_uncap }}.append(contentsOf: {{ entities_uncap }})
         let viewModels = viewModelDesigner.viewModels(from: self.{{ entities_uncap }})
-        view?.update(viewModels)
+        if {{ entities_uncap }}.isEmpty {
+            view.setupInfiniteScroll(isEnabled: true)
+        }
+        contentManager.updateData(viewModels)
     }
 }
 
 // MARK: - {{ prefix }}{{ module_info.name }}ViewOutput
 
 extension {{ prefix }}{{ module_info.name }}Presenter: {{ prefix }}{{ module_info.name }}ViewOutput {
-    
-    func didTriggerViewReadyEvent() {
-        view?.setupInitialState()
+
+    {{ privacy }}func didTriggerViewReadyEvent() {
+        view.setupInitialState()
     }
 
-    func didTriggerReload{{ custom_parameters.entities }}Event() {
+    {{ privacy }}func didTriggerReload{{ custom_parameters.entities }}Event() {
         {{ entities_uncap }}.removeAll()
-        interactor?.obtain{{ custom_parameters.entities }}()
+        interactor.obtain{{ custom_parameters.entities }}()
     }
 
-    func didTriggerLoadNextPageEvent() {
-        interactor?.obtainNextPage()
+    {{ privacy }}func didTriggerLoadNextPageEvent() {
+        interactor.obtainNextPage()
     }
 }
 
 // MARK: - {{ prefix }}{{ module_info.name }}InteractorOutput
 
 extension {{ prefix }}{{ module_info.name }}Presenter: {{ prefix }}{{ module_info.name }}InteractorOutput {
-    
-    func processErrorMessage(_ errorMessage: String) {
-        view?.stopIndication()
-        view?.showErrorMessage(errorMessage)
+
+    {{ privacy }}func processErrorMessage(_ errorMessage: String) {
+        view.stopIndication()
+        view.showErrorMessage(errorMessage)
     }
 
-    func obtain{{ custom_parameters.entities }}Success({{ entities_uncap }}: [{{ custom_parameters.plain }}PlainObject]) {
-        view?.stopIndication()
-        view?.stopPullToRefreshIfNeeded()
+    {{ privacy }}func obtain{{ custom_parameters.entities }}Success({{ entities_uncap }}: [{{ custom_parameters.plain }}PlainObject]) {
+        view.stopIndication()
+        view.stopPullToRefreshIfNeeded()
         add({{ entities_uncap }}: {{ entities_uncap }})
     }
 
-    func pagintaionHasBeenCompleted() {
-        view?.setupInfiniteScroll(isEnabled: false)
+    {{ privacy }}func pagintaionHasBeenCompleted() {
+        view.setupInfiniteScroll(isEnabled: false)
     }
 }
 
 // MARK: - {{ prefix }}{{ module_info.name }}ModuleInput
 
 extension {{ prefix }}{{ module_info.name }}Presenter: {{ prefix }}{{ module_info.name }}ModuleInput {
-    
-    func setModuleOutput(_ moduleOutput: ModuleOutput) {
+
+    {{ privacy }}func setModuleOutput(_ moduleOutput: ModuleOutput) {
         output = moduleOutput as? {{ prefix }}{{ module_info.name }}ModuleOutput
     }
 }

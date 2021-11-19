@@ -16,14 +16,14 @@ code_files:
 - {name: Assembly/Assembly.swift, path: Code/Assembly/Assembly.swift.liquid}
 
 # View layer
-- {name: View/ContentManager/ContentManager.swift, path: Code/View/ContentManager/ContentManager.swift.liquid}
-- {name: View/ContentManager/ContentManagerImplementation.swift, path: Code/View/ContentManager/ContentManagerImplementation.swift.liquid}
 - {name: View/ViewInput.swift, path: Code/View/ViewInput.swift.liquid}
 - {name: View/ViewOutput.swift, path: Code/View/ViewOutput.swift.liquid}
 - {name: View/ViewController.swift, path: Code/View/ViewController.swift.liquid}
 - {name: View/ViewControllerAppearance.swift, path: Code/View/ViewControllerAppearance.swift.liquid}
 
 # Presenter
+- {name: Presenter/ContentManager/ContentManager.swift, path: Code/Presenter/ContentManager/ContentManager.swift.liquid}
+- {name: Presenter/ContentManager/ContentManagerImplementation.swift, path: Code/Presenter/ContentManager/ContentManagerImplementation.swift.liquid}
 - {name: Presenter/ModuleInput.swift, path: Code/Presenter/ModuleInput.swift.liquid}
 - {name: Presenter/ModuleOutput.swift, path: Code/Presenter/ModuleOutput.swift.liquid}
 - {name: Presenter/Presenter.swift, path: Code/Presenter/Presenter.swift.liquid}

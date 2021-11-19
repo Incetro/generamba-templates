@@ -1,57 +1,59 @@
 {% include 'header' %}
 
 import UIKit
+import VIPER
+import Designable
+import Localizable
 import TransitionHandler
 
 // MARK: - {{ prefix }}{{ module_info.name }}ViewController
 
-final class {{ prefix }}{{ module_info.name }}ViewController: ViewController {
-    
+final {{ privacy }}class {{ prefix }}{{ module_info.name }}ViewController: UIViewController {
+
     // MARK: - Properties
 
     /// Presenter instance
     var output: {{ prefix }}{{ module_info.name }}ViewOutput?
-    
+
     // MARK: - ViewController
 
-    override func viewDidLoad() {
+    override {{ privacy }}func viewDidLoad() {
         super.viewDidLoad()
-        designer.add(designable: self)
+        designer.add(designable: self, for: \.{{ prefix }}{{ module_name_uncap }}ViewControllerAppearance)
         localizer.add(localizable: self)
         output?.didTriggerViewReadyEvent()
+        setup()
     }
 
     // MARK: - Private
 }
 
-// MARK: - Layout
+// MARK: - Setup
 
-extension {{ prefix }}{{ module_info.name }}ViewController {
+private extension {{ prefix }}{{ module_info.name }}ViewController {
 
-    private func setup() {
-
+    func setup() {
     }
 }
 
 // MARK: - Actions
 
-extension {{ prefix }}{{ module_info.name }}ViewController {
-
+private extension {{ prefix }}{{ module_info.name }}ViewController {
 }
 
 // MARK: - {{ prefix }}{{ module_info.name }}ViewInput
 
 extension {{ prefix }}{{ module_info.name }}ViewController: {{ prefix }}{{ module_info.name }}ViewInput {
-    
-    func setupInitialState() {   
 
+    {{ privacy }}func setupInitialState() {
     }
 }
 
 // MARK: - ViperViewOutputProvider
 
 extension {{ prefix }}{{ module_info.name }}ViewController: ViewOutputProvider {
-    var viewOutput: ModuleInput? {
+
+    {{ privacy }}var viewOutput: ModuleInput? {
         output as? ModuleInput
     }
 }
@@ -60,7 +62,7 @@ extension {{ prefix }}{{ module_info.name }}ViewController: ViewOutputProvider {
 
 extension {{ prefix }}{{ module_info.name }}ViewController: Localizable {
 
-    func localize(language: Language) {
+    {{ privacy }}func localize() {
     }
 }
 
@@ -68,15 +70,14 @@ extension {{ prefix }}{{ module_info.name }}ViewController: Localizable {
 
 extension {{ prefix }}{{ module_info.name }}ViewController: Designable {
 
-    func design(appearance: Appearance) {
-        let design = appearance.{{ prefix }}{{ module_name_uncap }}ViewControllerAppearance
-        view.backgroundColor = design.backgroundColor
+    {{ privacy }}func design(appearance: {{ prefix }}{{ module_info.name }}ViewControllerAppearance) {
+        view.backgroundColor = appearance.backgroundColor
     }
 }
 
 // MARK: - Constants
 
-extension {{ prefix }}{{ module_info.name }}ViewController {
+{{ privacy }}extension {{ prefix }}{{ module_info.name }}ViewController {
 
     enum Constants {
     }

@@ -1,0 +1,19 @@
+{% include 'header' %}
+
+// MARK: - {{ prefix }}{{ module_info.name }}ViewModel
+
+{{ privacy }}struct {{ prefix }}{{ module_info.name }}ViewModel: {{ prefix }}{{ module_info.name }}ViewModelProtocol {
+
+    // MARK: - Properties
+
+    private let {{ plain_uncap }}: {{ custom_parameters.plain }}PlainObject
+
+    // MARK: - Initializers
+
+    /// Default initializer
+    /// - Parameters:
+    ///   - {{ plain_uncap }}: current {{ plain_uncap }} model
+    {{ privacy }}init({{ plain_uncap }}: {{ custom_parameters.plain }}PlainObject) {
+        self.{{ plain_uncap }} = {{ plain_uncap }}
+    }
+}

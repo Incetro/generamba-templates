@@ -1,0 +1,19 @@
+{% include 'header' %}
+
+// MARK: - {{ custom_parameters.cell }}CellViewModel
+
+{{ privacy }}struct {{ custom_parameters.cell }}CellViewModel: {{ custom_parameters.cell }}CellViewModelProtocol {
+
+    // MARK: - Properties
+
+    private let {{ plain_uncap }}: {{ custom_parameters.plain }}PlainObject
+
+    // MARK: - Initializers
+
+    /// Default initializer
+    /// - Parameters:
+    ///   - {{ plain_uncap }}: current {{ plain_uncap }} model
+    {{ privacy }}init({{ plain_uncap }}: {{ custom_parameters.plain }}PlainObject) {
+        self.{{ plain_uncap }} = {{ plain_uncap }}
+    }
+}

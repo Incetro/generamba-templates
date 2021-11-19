@@ -8,55 +8,66 @@ import TransitionHandler
 
 // MARK: - {{ prefix }}{{ module_info.name }}ModuleAssembly
 
-final class {{ prefix }}{{ module_info.name }}ModuleAssembly: CollectableAssembly {
+final {{ privacy }}class {{ prefix }}{{ module_info.name }}ModuleAssembly: CollectableAssembly {
 
     // MARK: - Initializers
-    
-    required init() {
 
+    required {{ privacy }}init() {
     }
 
     // MARK: - Useful
 
-    func obtainViewController() -> {{ prefix }}{{ module_info.name }}ViewController {
+    {{ privacy }}func obtainViewController() -> {{ prefix }}{{ module_info.name }}ViewController {
         container.resolve({{ prefix }}{{ module_info.name }}ViewController.self).unwrap()
     }
-    
+
     // MARK: - Assembly
-    
-    func assemble(inContainer container: Container) {
+
+    {{ privacy }}func assemble(inContainer container: Container) {
 
         container.register({{ prefix }}{{ module_info.name }}ViewController.self) { resolver in
             let controller = {{ prefix }}{{ module_info.name }}ViewController()
-            controller.output = resolver.resolve({{ prefix }}{{ module_info.name }}ViewOutput.self, argument: controller as {{ prefix }}{{ module_info.name }}ViewInput)
-            controller.contentManager = resolver.resolve({{ prefix }}{{ module_info.name }}ContentManager.self)
+            let contentManager = resolver.resolve({{ prefix }}{{ module_info.name }}ContentManager.self).unwrap()
+            controller.output = resolver.resolve(
+                {{ prefix }}{{ module_info.name }}ViewOutput.self,
+                arguments: controller as {{ prefix }}{{ module_info.name }}ViewInput, contentManager
+            )
             return controller
         }
-        
+
         container.register({{ prefix }}{{ module_info.name }}RouterInput.self) { (resolver, transitionHandler: TransitionHandler) in
-            let router = {{ prefix }}{{ module_info.name }}Router(transitionHandler: transitionHandler)    
+            let router = {{ prefix }}{{ module_info.name }}Router(transitionHandler: transitionHandler)
             return router
         }
-        
-        container.register({{ prefix }}{{ module_info.name }}ViewOutput.self) { (resolver, view: {{ prefix }}{{ module_info.name }}ViewInput) in
-            let presenter = {{ prefix }}{{ module_info.name }}Presenter()
-            presenter.view = view
+
+        container.register({{ prefix }}{{ module_info.name }}ViewOutput.self) { (
+            resolver,
+            view: {{ prefix }}{{ module_info.name }}ViewInput,
+            contentManager: {{ prefix }}{{ module_info.name }}ContentManager
+        ) in
+            let transitionHandler = (view as? TransitionHandler).unwrap()
+            let router = resolver.resolve(
+                {{ prefix }}{{ module_info.name }}RouterInput.self,
+                argument: transitionHandler
+            ).unwrap()
+            let interactor = resolver
+                .resolve({{ prefix }}{{ module_info.name }}InteractorInput.self)
+                .unwrap(as: {{ prefix }}{{ module_info.name }}Interactor.self)
+            let presenter = {{ prefix }}{{ module_info.name }}Presenter(
+                view: view,
+                interactor: interactor,
+                router: router,
+                contentManager: contentManager
+            )
+            interactor.output = presenter
             return presenter
-        }.initCompleted { (resolver, viewOutput) in
-            if let presenter = viewOutput as? {{ prefix }}{{ module_info.name }}Presenter {
-                presenter.interactor = resolver.resolve({{ prefix }}{{ module_info.name }}InteractorInput.self, argument: presenter as {{ prefix }}{{ module_info.name }}InteractorOutput)
-                if let transitionHandler = presenter.view as? TransitionHandler {
-                    presenter.router = resolver.resolve({{ prefix }}{{ module_info.name }}RouterInput.self, argument: transitionHandler)
-                }
-            }
         }
-        
-        container.register({{ prefix }}{{ module_info.name }}InteractorInput.self) { (resolver, interactorOutput: {{ prefix }}{{ module_info.name }}InteractorOutput) in
+
+        container.register({{ prefix }}{{ module_info.name }}InteractorInput.self) { resolver in
             let interactor = {{ prefix }}{{ module_info.name }}Interactor()
-            interactor.output = interactorOutput
             return interactor
         }
-            
+
         container.register({{ prefix }}{{ module_info.name }}ContentManager.self) { resolver in
             let contentManager = {{ prefix }}{{ module_info.name }}ContentManagerImplementation()
             return contentManager

@@ -1,14 +1,11 @@
 {% include 'header' %}
 
+import VIPER
+
 // MARK: - {{ prefix }}{{ module_info.name }}ViewInput
 
-protocol {{ prefix }}{{ module_info.name }}ViewInput: ViewInput {
-    
+{{ privacy }}protocol {{ prefix }}{{ module_info.name }}ViewInput: ViewInput {
+
     /// Setup initial view state
     func setupInitialState()
-    
-    /// Update data
-    ///
-    /// - Parameter viewModel: new data for AloeStackView instance
-    func update(_ viewModel: {{ prefix }}{{ module_info.name }}ViewModelProtocol)
 }

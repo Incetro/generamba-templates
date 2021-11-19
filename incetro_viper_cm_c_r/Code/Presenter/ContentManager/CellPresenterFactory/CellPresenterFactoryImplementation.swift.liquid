@@ -1,0 +1,39 @@
+{% include 'header' %}
+
+import UIKit
+import Swinject
+import TransitionHandler
+
+// MARK: - {{ custom_parameters.cell }}CellPresenterFactoryImplementation
+
+final {{ privacy }}class {{ custom_parameters.cell }}CellPresenterFactoryImplementation {
+
+    // MARK: - Properties
+
+    /// DI container instance
+    private let container: Container
+
+    /// {{ prefix }}{{ module_info.name }}RouterInput instance
+    private unowned let {{ module_name_uncap }}Router: {{ prefix }}{{ module_info.name }}RouterInput
+
+    // MARK: - Initializers
+
+    /// Default initializer
+    /// - Parameters:
+    ///   - container: DI container instance
+    ///   - transitionHandler: TransitionHandler instance
+    {{ privacy }}init(container: Container, {{ module_name_uncap }}Router: {{ prefix }}{{ module_info.name }}RouterInput) {
+        self.container = container
+        self.{{ module_name_uncap }}Router = {{ module_name_uncap }}Router
+    }
+}
+
+// MARK: - {{ custom_parameters.cell }}CellPresenterFactory
+
+extension {{ custom_parameters.cell }}CellPresenterFactoryImplementation: {{ custom_parameters.cell }}CellPresenterFactory {
+
+    {{ privacy }}func presenter(with viewModel: {{ custom_parameters.cell }}CellViewModelProtocol, tableView: UITableView) -> {{ custom_parameters.cell }}CellPresenter {
+        {{ custom_parameters.cell }}CellPresenter.registerCell(on: tableView)
+        return {{ custom_parameters.cell }}CellPresenter(viewModel: viewModel, {{ module_name_uncap }}Router: {{ module_name_uncap }}Router)
+    }
+}

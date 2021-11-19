@@ -1,17 +1,14 @@
 {% include 'header' %}
 
+import VIPER
+
 // MARK: - {{ prefix }}{{ module_info.name }}ViewInput
 
-protocol {{ prefix }}{{ module_info.name }}ViewInput: ViewInput {
-    
+{{ privacy }}protocol {{ prefix }}{{ module_info.name }}ViewInput: ViewInput {
+
     /// Setup initial view state
     func setupInitialState()
-    
-    /// Update data
-    ///
-    /// - Parameter viewModels: new data for UITableView instance
-    func update(_ viewModels: [{{ custom_parameters.cell }}CellViewModelProtocol])
-    
+
     /// Stop pull to refresh loader
     func stopPullToRefreshIfNeeded()
 
