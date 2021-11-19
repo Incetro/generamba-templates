@@ -1,0 +1,13 @@
+{% include 'header' %}
+
+import AloeStackView
+
+// MARK: - {{ prefix }}{{ module_info.name }}ContentManager
+
+{{ privacy }}protocol {{ prefix }}{{ module_info.name }}ContentManager {
+
+    /// Update stack's data using some new viewModel
+    ///
+    /// - Parameter viewModel: new data
+    func updateData(_ viewModel: {{ prefix }}{{ module_info.name }}ViewModelProtocol)
+}

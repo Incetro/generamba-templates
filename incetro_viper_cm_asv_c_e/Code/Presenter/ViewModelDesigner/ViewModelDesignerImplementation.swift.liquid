@@ -1,21 +1,18 @@
 {% include 'header' %}
 
-import Foundation
-
 // MARK: - {{ prefix }}{{ module_info.name }}ViewModelDesignerImplementation
 
-final class {{ prefix }}{{ module_info.name }}ViewModelDesignerImplementation {
-
+final {{ privacy }}class {{ prefix }}{{ module_info.name }}ViewModelDesignerImplementation {
 }
 
 // MARK: - {{ prefix }}{{ module_info.name }}ViewModelDesigner
 
 extension {{ prefix }}{{ module_info.name }}ViewModelDesignerImplementation: {{ prefix }}{{ module_info.name }}ViewModelDesigner {
-	
-	func viewModel(from data: {{ prefix }}{{ module_info.name }}Module.Data) -> {{ prefix }}{{ module_info.name }}ViewModelProtocol {
-		let result: {{ prefix }}{{ module_info.name }}ViewModelProtocol
-	    switch data {
-	    }
+
+    {{ privacy }}func viewModel(from data: {{ prefix }}{{ module_info.name }}Module.Data) -> {{ prefix }}{{ module_info.name }}ViewModelProtocol {
+        let result: {{ prefix }}{{ module_info.name }}ViewModelProtocol
+        switch data {
+        }
         return result
     }
 }

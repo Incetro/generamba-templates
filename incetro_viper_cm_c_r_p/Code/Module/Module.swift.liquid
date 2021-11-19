@@ -1,20 +1,24 @@
 {% include 'header' %}
 
-import UIKit
 import TransitionHandler
 
 // MARK: - {{ prefix }}{{ module_info.name }}Module
 
-final class {{ prefix }}{{ module_info.name }}Module: Module {
+final {{ privacy }}class {{ prefix }}{{ module_info.name }}Module: Module {
 
     // MARK: - Aliases
 
-    typealias Input = {{ prefix }}{{ module_info.name }}ModuleInput
-    typealias View = {{ prefix }}{{ module_info.name }}ViewController
+    {{ privacy }}typealias Input = {{ prefix }}{{ module_info.name }}ModuleInput
+    {{ privacy }}typealias View = {{ prefix }}{{ module_info.name }}ViewController
+
+    // MARK: - Initializers
+
+    required {{ privacy }}init() {
+    }
 
     // MARK: - Module
 
-    static func instantiate() -> {{ prefix }}{{ module_info.name }}ViewController {
+    {{ privacy }}static func instantiate() -> {{ prefix }}{{ module_info.name }}ViewController {
         {{ prefix }}{{ module_info.name }}ModuleAssembly().obtainViewController()
     }
 }

@@ -1,0 +1,68 @@
+{% include 'header' %}
+
+import UIKit
+import VIPER
+
+// MARK: - {{ prefix }}{{ module_info.name }}ContentManager
+
+final {{ privacy }}class {{ prefix }}{{ module_info.name }}ContentManagerImplementation: IntermediateContentManager<UITableView> {
+
+    // MARK: - Properties
+
+    /// UITableView instance
+    private let tableView: UITableView
+
+    /// {{ custom_parameters.cell }} presenters factory
+    private let presentersFactory: {{ custom_parameters.cell }}CellPresenterFactory
+
+    /// Current presenters which manipulates tableView's cells
+    private var presenters: [{{ custom_parameters.cell }}CellPresenter] = []
+
+    // MARK: - Initializers
+
+    /// Default initializer
+    /// - Parameters:
+    ///   - tableView: UITableView instance
+    ///   - presentersFactory: {{ cell_uncap }} presenters factory
+    {{ privacy }}init(
+        tableView: UITableView,
+        presentersFactory: {{ custom_parameters.cell }}CellPresenterFactory
+    ) {
+        self.tableView = tableView
+        self.presentersFactory = presentersFactory
+        super.init()
+    }
+}
+
+// MARK: - {{ prefix }}{{ module_info.name }}ContentManager
+
+extension {{ prefix }}{{ module_info.name }}ContentManagerImplementation: {{ prefix }}{{ module_info.name }}ContentManager {
+
+    {{ privacy }}func updateData(_ viewModels: [{{ custom_parameters.cell }}CellViewModelProtocol]) {
+        presenters = presentersFactory.presenters(with: viewModels, tableView: tableView)
+        tableView.reloadData()
+    }
+}
+
+// MARK: - UITableViewDelegate
+
+extension {{ prefix }}{{ module_info.name }}ContentManagerImplementation: UITableViewDelegate {
+
+    {{ privacy }}func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        presenters[indexPath.row].cellSize(reusableCellHolder: tableView).height
+    }
+}
+
+// MARK: - UITableViewDataSource
+
+extension {{ prefix }}{{ module_info.name }}ContentManagerImplementation: UITableViewDataSource {
+
+    {{ privacy }}func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        presenters.count
+    }
+
+    {{ privacy }}func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = presenters[indexPath.row].cellFromReusableCellHolder(tableView, forIndexPath: indexPath)
+        return cell
+    }
+}

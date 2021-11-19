@@ -4,31 +4,48 @@ import TransitionHandler
 
 // MARK: - {{ prefix }}{{ module_info.name }}Presenter
 
-final class {{ prefix }}{{ module_info.name }}Presenter {
-    
+final {{ privacy }}class {{ prefix }}{{ module_info.name }}Presenter {
+
     // MARK: - Properties
-    
+
     /// ModuleOutput instance
     weak var output: {{ prefix }}{{ module_info.name }}ModuleOutput?
 
     /// View instance
-    weak var view: {{ prefix }}{{ module_info.name }}ViewInput?
+    private unowned let view: {{ prefix }}{{ module_info.name }}ViewInput
+
+    /// Interactor instance
+    private let interactor: {{ prefix }}{{ module_info.name }}InteractorInput
+
+    /// Router instance
+    private let router: {{ prefix }}{{ module_info.name }}RouterInput
+
+    /// {{ prefix }}{{ module_info.name }} content manager
+    private let contentManager: {{ prefix }}{{ module_info.name }}ContentManager
 
     /// {{ prefix }}{{ module_info.name }}CellViewModelProtocol factory
     private let {{ cell_uncap }}CellViewModelDesigner: {{ custom_parameters.cell }}CellViewModelDesigner
-    
-    /// Interactor instance
-    var interactor: {{ prefix }}{{ module_info.name }}InteractorInput?
 
-    /// Router instance
-    var router: {{ prefix }}{{ module_info.name }}RouterInput?
-    
     // MARK: - Initializers
 
     /// Default initializer
-    ///
-    /// - Parameter {{ cell_uncap }}CellViewModelDesigner: {{ custom_parameters.cell }}CellViewModelProtocol factory
-    init({{ cell_uncap }}CellViewModelDesigner: {{ custom_parameters.cell }}CellViewModelDesigner) {
+    /// - Parameters:
+    ///   - view: {{ prefix }}{{ module_info.name }}ViewInput instance
+    ///   - interactor: {{ prefix }}{{ module_info.name }}InteractorInput instance
+    ///   - router: {{ prefix }}{{ module_info.name }}RouterInput instance
+    ///   - contentManager: {{ prefix }}{{ module_info.name }}ContentManager instance
+    ///   - {{ cell_uncap }}CellViewModelDesigner: {{ custom_parameters.cell }}CellViewModelProtocol factory
+    {{ privacy }}init(
+        view: {{ prefix }}{{ module_info.name }}ViewInput,
+        interactor: {{ prefix }}{{ module_info.name }}InteractorInput,
+        router: {{ prefix }}{{ module_info.name }}RouterInput,
+        contentManager: {{ prefix }}{{ module_info.name }}ContentManager,
+        {{ cell_uncap }}CellViewModelDesigner: {{ custom_parameters.cell }}CellViewModelDesigner
+    ) {
+        self.view = view
+        self.router = router
+        self.interactor = interactor
+        self.contentManager = contentManager
         self.{{ cell_uncap }}CellViewModelDesigner = {{ cell_uncap }}CellViewModelDesigner
     }
 }
@@ -36,27 +53,27 @@ final class {{ prefix }}{{ module_info.name }}Presenter {
 // MARK: - {{ prefix }}{{ module_info.name }}ViewOutput
 
 extension {{ prefix }}{{ module_info.name }}Presenter: {{ prefix }}{{ module_info.name }}ViewOutput {
-    
-    func didTriggerViewReadyEvent() {
-        view?.setupInitialState()
+
+    {{ privacy }}func didTriggerViewReadyEvent() {
+        view.setupInitialState()
     }
 }
 
 // MARK: - {{ prefix }}{{ module_info.name }}InteractorOutput
 
 extension {{ prefix }}{{ module_info.name }}Presenter: {{ prefix }}{{ module_info.name }}InteractorOutput {
-    
-    func processErrorMessage(_ errorMessage: String) {
-        view?.stopIndication()
-        view?.showErrorMessage(errorMessage)
+
+    {{ privacy }}func processErrorMessage(_ errorMessage: String) {
+        view.stopIndication()
+        view.showErrorMessage(errorMessage)
     }
 }
 
 // MARK: - {{ prefix }}{{ module_info.name }}ModuleInput
 
 extension {{ prefix }}{{ module_info.name }}Presenter: {{ prefix }}{{ module_info.name }}ModuleInput {
-    
-    func setModuleOutput(_ moduleOutput: ModuleOutput) {
+
+    {{ privacy }}func setModuleOutput(_ moduleOutput: ModuleOutput) {
         output = moduleOutput as? {{ prefix }}{{ module_info.name }}ModuleOutput
     }
 }

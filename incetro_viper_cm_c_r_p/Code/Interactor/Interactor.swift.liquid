@@ -1,13 +1,13 @@
 {% include 'header' %}
 
-import Foundation
+import Paginator 
 
 // MARK: - {{ prefix }}{{ module_info.name }}Interactor
 
-final class {{ prefix }}{{ module_info.name }}Interactor {
-    
+final {{ privacy }}class {{ prefix }}{{ module_info.name }}Interactor {
+
     // MARK: - Properties
-    
+
     /// Presenter instance
     weak var output: {{ prefix }}{{ module_info.name }}InteractorOutput?
 
@@ -30,16 +30,16 @@ final class {{ prefix }}{{ module_info.name }}Interactor {
     // MARK: - Private
 
     private func setupPaginator() {
-        paginator.fetchHandler = { [weak self] (paginator, page, pageSize) in
+        paginator.fetchHandler = { [weak self] paginator, page, pageSize in
             self?.{{ service_uncap }}Service
                 .obtain(page: page, pageSize: pageSize)
                 .async()
-                .success { ({{ entities_uncap }}, pagination) in
+                .success { {{ entities_uncap }}, pagination in
                     paginator.received(results: {{ entities_uncap }}, total: pagination.totalCount)
                 }
                 .failure(paginator.failed)
         }
-        paginator.resultsHandler = { [weak self] (paginator, {{ entities_uncap }}) in
+        paginator.resultsHandler = { [weak self] paginator, {{ entities_uncap }} in
             self?.output?.obtain{{ custom_parameters.entities }}Success({{ entities_uncap }}: {{ entities_uncap }})
         }
         paginator.completionHandler = { [weak self] _ in
@@ -51,12 +51,12 @@ final class {{ prefix }}{{ module_info.name }}Interactor {
 // MARK: - {{ prefix }}{{ module_info.name }}InteractorInput
 
 extension {{ prefix }}{{ module_info.name }}Interactor: {{ prefix }}{{ module_info.name }}InteractorInput {
-    
-    func obtain{{ custom_parameters.entities }}() {
+
+    {{ privacy }}func obtain{{ custom_parameters.entities }}() {
         paginator.fetchFirstPage()
     }
 
-    func obtainNextPage() {
+    {{ privacy }}func obtainNextPage() {
         paginator.fetchNextPage()
     }
 }

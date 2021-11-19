@@ -1,0 +1,33 @@
+{% include 'header' %}
+
+import UIKit
+import VIPER
+
+// MARK: - {{ prefix }}{{ module_info.name }}ContentManagerImplementation
+
+final class {{ prefix }}{{ module_info.name }}ContentManagerImplementation: IntermediateContentManager<UITableView> {
+}
+
+// MARK: - {{ prefix }}{{ module_info.name }}ContentManager
+
+extension {{ prefix }}{{ module_info.name }}ContentManagerImplementation: {{ prefix }}{{ module_info.name }}ContentManager {
+}
+
+// MARK: - UITableViewDelegate
+
+extension {{ prefix }}{{ module_info.name }}ContentManagerImplementation: UITableViewDelegate {
+}
+
+// MARK: - UITableViewDataSource
+
+extension {{ prefix }}{{ module_info.name }}ContentManagerImplementation: UITableViewDataSource {
+
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        fatalError()
+    }
+
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = UITableViewCell()
+        return cell
+    }
+}

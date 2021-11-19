@@ -1,0 +1,13 @@
+{% include 'header' %}
+
+import VIPER
+
+// MARK: - {{ prefix }}{{ module_info.name }}ContentManager
+
+{{ privacy }}protocol {{ prefix }}{{ module_info.name }}ContentManager: GeneralContentManager {
+
+    /// Update table's data using some new viewModels
+    ///
+    /// - Parameter viewModels: new data
+    func updateData(_ viewModels: [{{ custom_parameters.cell }}CellViewModelProtocol])
+}

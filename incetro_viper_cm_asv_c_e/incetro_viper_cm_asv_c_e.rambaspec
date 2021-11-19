@@ -16,16 +16,11 @@ code_files:
 - {name: Assembly/Assembly.swift, path: Code/Assembly/Assembly.swift.liquid}
 
 # View layer
-- {name: View/ContentManager/ContentManager.swift, path: Code/View/ContentManager/ContentManager.swift.liquid}
-- {name: View/ContentManager/ContentManagerImplementation.swift, path: Code/View/ContentManager/ContentManagerImplementation.swift.liquid}
 
 - {name: View/ViewInput.swift, path: Code/View/ViewInput.swift.liquid}
 - {name: View/ViewOutput.swift, path: Code/View/ViewOutput.swift.liquid}
 - {name: View/ViewController.swift, path: Code/View/ViewController.swift.liquid}
 - {name: View/ViewControllerAppearance.swift, path: Code/View/ViewControllerAppearance.swift.liquid}
-
-- {name: View/ContentManager/{{ prefix }}{{ module_info.name }}ViewModel/ViewModelProtocol.swift, custom_name: "{{ prefix }}{{ module_info.name }}ViewModelProtocol.swift", path: Code/View/ContentManager/ViewModel/ViewModelProtocol.swift.liquid}
-- {name: View/ContentManager/{{ prefix }}{{ module_info.name }}ViewModel/ViewModel.swift, custom_name: "{{ prefix }}{{ module_info.name }}ViewModel.swift", path: Code/View/ContentManager/ViewModel/ViewModel.swift.liquid}
 
 # Presenter
 - {name: Presenter/ModuleInput.swift, path: Code/Presenter/ModuleInput.swift.liquid}
@@ -33,6 +28,12 @@ code_files:
 - {name: Presenter/Presenter.swift, path: Code/Presenter/Presenter.swift.liquid}
 - {name: Presenter/{{ custom_parameters.cell }}ViewModelDesigner/ViewModelDesigner.swift, path: Code/Presenter/ViewModelDesigner/ViewModelDesigner.swift.liquid}
 - {name: Presenter/{{ custom_parameters.cell }}ViewModelDesigner/ViewModelDesignerImplementation.swift, path: Code/Presenter/ViewModelDesigner/ViewModelDesignerImplementation.swift.liquid}
+
+- {name: Presenter/ContentManager/ContentManager.swift, path: Code/Presenter/ContentManager/ContentManager.swift.liquid}
+- {name: Presenter/ContentManager/ContentManagerImplementation.swift, path: Code/Presenter/ContentManager/ContentManagerImplementation.swift.liquid}
+
+- {name: Presenter/ContentManager/{{ prefix }}{{ module_info.name }}ViewModel/ViewModelProtocol.swift, custom_name: "{{ prefix }}{{ module_info.name }}ViewModelProtocol.swift", path: Code/Presenter/ContentManager/ViewModel/ViewModelProtocol.swift.liquid}
+- {name: Presenter/ContentManager/{{ prefix }}{{ module_info.name }}ViewModel/ViewModel.swift, custom_name: "{{ prefix }}{{ module_info.name }}ViewModel.swift", path: Code/Presenter/ContentManager/ViewModel/ViewModel.swift.liquid}
 
 # Interactor
 - {name: Interactor/InteractorInput.swift, path: Code/Interactor/InteractorInput.swift.liquid}

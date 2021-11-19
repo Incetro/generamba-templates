@@ -1,13 +1,11 @@
 {% include 'header' %}
 
-import Foundation
-
 // MARK: - {{ prefix }}{{ module_info.name }}Interactor
 
-final class {{ prefix }}{{ module_info.name }}Interactor {
-    
+final {{ privacy }}class {{ prefix }}{{ module_info.name }}Interactor {
+
     // MARK: - Properties
-    
+
     /// Presenter instance
     weak var output: {{ prefix }}{{ module_info.name }}InteractorOutput?
 

@@ -1,17 +1,15 @@
 {% include 'header' %}
 
-import Foundation
-
 // MARK: - {{ custom_parameters.cell }}CellViewModelDesigner
 
-protocol {{ custom_parameters.cell }}CellViewModelDesigner {
-    
+{{ privacy }}protocol {{ custom_parameters.cell }}CellViewModelDesigner {
+
     /// Converts {{ custom_parameters.plain }}PlainObject to {{ custom_parameters.cell }}CellViewModelProtocol
     /// - Parameter {{ plain_uncap }}: some {{ plain_uncap }}
     func viewModel(from {{ plain_uncap }}: {{ custom_parameters.plain }}PlainObject) -> {{ custom_parameters.cell }}CellViewModelProtocol
 }
 
-extension {{ custom_parameters.cell }}CellViewModelDesigner {
+{{ privacy }}extension {{ custom_parameters.cell }}CellViewModelDesigner {
 
     /// Converts [{{ custom_parameters.plain }}PlainObject] to [{{ custom_parameters.cell }}CellViewModelProtocol]
     /// - Parameter {{ entities_uncap }}: some {{ entities_uncap }}

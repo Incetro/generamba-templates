@@ -4,22 +4,25 @@ import TransitionHandler
 
 // MARK: - {{ prefix }}{{ module_info.name }}Presenter
 
-final class {{ prefix }}{{ module_info.name }}Presenter {
-    
+final {{ privacy }}class {{ prefix }}{{ module_info.name }}Presenter {
+
     // MARK: - Properties
-    
+
     /// ModuleOutput instance
     weak var output: {{ prefix }}{{ module_info.name }}ModuleOutput?
 
     /// View instance
-    weak var view: {{ prefix }}{{ module_info.name }}ViewInput?
+    private unowned let view: {{ prefix }}{{ module_info.name }}ViewInput
 
     /// Interactor instance
-    var interactor: {{ prefix }}{{ module_info.name }}InteractorInput?
+    private let interactor: {{ prefix }}{{ module_info.name }}InteractorInput
 
     /// Router instance
-    var router: {{ prefix }}{{ module_info.name }}RouterInput?
-    
+    private let router: {{ prefix }}{{ module_info.name }}RouterInput
+
+    /// {{ prefix }}{{ module_info.name }} content manager 
+    private let contentManager: {{ prefix }}{{ module_info.name }}ContentManager
+
     /// {{ prefix }}{{ module_info.name }}ViewModelProtocol factory
     private let viewModelDesigner: {{ prefix }}{{ module_info.name }}ViewModelDesigner
 
@@ -30,12 +33,24 @@ final class {{ prefix }}{{ module_info.name }}Presenter {
 
     /// Default initializer
     /// - Parameters:
+    ///   - view: {{ prefix }}{{ module_info.name }}ViewInput instance
+    ///   - interactor: {{ prefix }}{{ module_info.name }}InteractorInput instance
+    ///   - router: {{ prefix }}{{ module_info.name }}RouterInput instance
+    ///   - contentManager: {{ prefix }}{{ module_info.name }}ContentManager instance
     ///   - viewModelDesigner: {{ prefix }}{{ module_info.name }}ViewModelProtocol factory
     ///   - {{ plain_uncap }}: current {{ plain_uncap }} instance
-    init(
+    {{ privacy }}init(
+        view: {{ prefix }}{{ module_info.name }}ViewInput,
+        interactor: {{ prefix }}{{ module_info.name }}InteractorInput,
+        router: {{ prefix }}{{ module_info.name }}RouterInput,
+        contentManager: {{ prefix }}{{ module_info.name }}ContentManager,
         viewModelDesigner: {{ prefix }}{{ module_info.name }}ViewModelDesigner,
         {{ plain_uncap }}: {{ custom_parameters.plain }}PlainObject
     ) {
+        self.view = view
+        self.router = router
+        self.interactor = interactor
+        self.contentManager = contentManager
         self.viewModelDesigner = viewModelDesigner
         self.{{ plain_uncap }} = {{ plain_uncap }}
     }
@@ -44,29 +59,29 @@ final class {{ prefix }}{{ module_info.name }}Presenter {
 // MARK: - {{ prefix }}{{ module_info.name }}ViewOutput
 
 extension {{ prefix }}{{ module_info.name }}Presenter: {{ prefix }}{{ module_info.name }}ViewOutput {
-    
-    func didTriggerViewReadyEvent() {
-        view?.setupInitialState()
+
+    {{ privacy }}func didTriggerViewReadyEvent() {
+        view.setupInitialState()
         let viewModel = viewModelDesigner.viewModel(from: {{ plain_uncap }})
-        view?.update(viewModel)
+        contentManager.updateData(viewModel)
     }
 }
 
 // MARK: - {{ prefix }}{{ module_info.name }}InteractorOutput
 
 extension {{ prefix }}{{ module_info.name }}Presenter: {{ prefix }}{{ module_info.name }}InteractorOutput {
-    
-    func processErrorMessage(_ errorMessage: String) {
-        view?.stopIndication()
-        view?.showErrorMessage(errorMessage)
+
+    {{ privacy }}func processErrorMessage(_ errorMessage: String) {
+        view.stopIndication()
+        view.showErrorMessage(errorMessage)
     }
 }
 
 // MARK: - {{ prefix }}{{ module_info.name }}ModuleInput
 
 extension {{ prefix }}{{ module_info.name }}Presenter: {{ prefix }}{{ module_info.name }}ModuleInput {
-    
-    func setModuleOutput(_ moduleOutput: ModuleOutput) {
+
+    {{ privacy }}func setModuleOutput(_ moduleOutput: ModuleOutput) {
         output = moduleOutput as? {{ prefix }}{{ module_info.name }}ModuleOutput
     }
 }

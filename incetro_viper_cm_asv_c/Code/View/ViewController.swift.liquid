@@ -1,17 +1,19 @@
 {% include 'header' %}
 
 import UIKit
+import Designable
+import Localizable
 import AloeStackView
 import TransitionHandler
 
 // MARK: - {{ prefix }}{{ module_info.name }}ViewController
 
-final class {{ prefix }}{{ module_info.name }}ViewController: ViewController {
-    
+final {{ privacy }}class {{ prefix }}{{ module_info.name }}ViewController: UIViewController {
+
     // MARK: - Properties
-    
+
     /// Current content AloeStackView
-    private let stackView = AloeStackView().then {
+    private(set) lazy var stackView = AloeStackView().then {
         $0.separatorColor = .clear
         $0.backgroundColor = .clear
     }
@@ -19,60 +21,52 @@ final class {{ prefix }}{{ module_info.name }}ViewController: ViewController {
     /// Presenter instance
     var output: {{ prefix }}{{ module_info.name }}ViewOutput?
 
-    /// {{ prefix }}{{ module_info.name }} content manager
-    var contentManager: {{ prefix }}{{ module_info.name }}ContentManager?
-    
     // MARK: - ViewController
 
-    override func viewDidLoad() {
-    	super.viewDidLoad()
-        designer.add(designable: self)
+    override {{ privacy }}func viewDidLoad() {
+        super.viewDidLoad()
+        designer.add(designable: self, for: \.{{ prefix }}{{ module_name_uncap }}ViewControllerAppearance)
         localizer.add(localizable: self)
         output?.didTriggerViewReadyEvent()
+        setup()
     }
 
     // MARK: - Private
-
-    /// Current stack view setup
-    private func setupStackView() {
-        view.addSubview(stackView.prepareForAutolayout())
-        stackView.pinToSuperview()
-        contentManager?.configure(stackView: stackView)
-    }
 }
 
-// MARK: - Layout
+// MARK: - Setup
 
-extension {{ prefix }}{{ module_info.name }}ViewController {
+private extension {{ prefix }}{{ module_info.name }}ViewController {
 
-    private func setup() {
+    func setup() {
+        setupStackView()
+    }
 
+    /// Current stack view setup
+    func setupStackView() {
+        view.addSubview(stackView.prepareForAutolayout())
+        stackView.pinToSuperview()
     }
 }
 
 // MARK: - Actions
 
-extension {{ prefix }}{{ module_info.name }}ViewController {
-
+private extension {{ prefix }}{{ module_info.name }}ViewController {
 }
 
 // MARK: - {{ prefix }}{{ module_info.name }}ViewInput
 
 extension {{ prefix }}{{ module_info.name }}ViewController: {{ prefix }}{{ module_info.name }}ViewInput {
-    
-    func setupInitialState() {   
-        setupStackView()
-    }
-    
-    func update(_ viewModel: {{ prefix }}{{ module_info.name }}ViewModelProtocol) {
-        contentManager?.updateData(viewModel)
+
+    {{ privacy }}func setupInitialState() {
     }
 }
 
 // MARK: - ViperViewOutputProvider
 
 extension {{ prefix }}{{ module_info.name }}ViewController: ViewOutputProvider {
-    var viewOutput: ModuleInput? {
+
+    {{ privacy }}var viewOutput: ModuleInput? {
         output as? ModuleInput
     }
 }
@@ -81,7 +75,7 @@ extension {{ prefix }}{{ module_info.name }}ViewController: ViewOutputProvider {
 
 extension {{ prefix }}{{ module_info.name }}ViewController: Localizable {
 
-    func localize(language: Language) {
+    {{ privacy }}func localize() {
     }
 }
 
@@ -89,16 +83,16 @@ extension {{ prefix }}{{ module_info.name }}ViewController: Localizable {
 
 extension {{ prefix }}{{ module_info.name }}ViewController: Designable {
 
-    func design(appearance: Appearance) {
-        let design = appearance.{{ prefix }}{{ module_name_uncap }}ViewControllerAppearance
-        view.backgroundColor = design.backgroundColor
+    {{ privacy }}func design(appearance: {{ prefix }}{{ module_info.name }}ViewControllerAppearance) {
+        view.backgroundColor = appearance.backgroundColor
     }
 }
 
 // MARK: - Constants
 
-extension {{ prefix }}{{ module_info.name }}ViewController {
+{{ privacy }}extension {{ prefix }}{{ module_info.name }}ViewController {
 
     enum Constants {
     }
 }
+

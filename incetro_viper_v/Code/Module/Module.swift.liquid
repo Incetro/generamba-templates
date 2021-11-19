@@ -1,14 +1,12 @@
 {% include 'header' %}
 
-import UIKit
-
 // MARK: - {{ prefix }}{{ module_info.name }}Module
 
-final class {{ prefix }}{{ module_info.name }}Module {
+final {{ privacy }}class {{ prefix }}{{ module_info.name }}Module {
 
     // MARK: - Module
 
-    static func instantiate() -> {{ prefix }}{{ module_info.name }}View {
+    {{ privacy }}static func instantiate() -> {{ prefix }}{{ module_info.name }}View {
         {{ prefix }}{{ module_info.name }}ModuleAssembly().obtainView()
     }
 }
